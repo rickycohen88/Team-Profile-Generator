@@ -12,14 +12,80 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-
+let teamMembersFlex = [];
 //function to call to ask questions
-const promptUser = () =>{
-    return inquirer
+const promptUser = () =>{return inquirer
     .prompt([
         //questions to be asked go here
+        {
+            type:"input",
+            name:"Name",
+            message:"Please enter the team members name"
+        },
+        {
+            type:"input",
+            name:"Email",
+            message:"Please enter the team members email",
+        },
+        {
+            type: "checkbox",
+            name: "Role",
+            message: "Please selct this team members role",
+            choices:[
+                {name:'Manager'},
+                {name:'Engineer'},
+                {name:'Intern'},
+            ]
+        },
+        {
+            type:"confirm",
+            name:"idQues",
+            message:"Dose this employee already have an id number you would like to enter?"
+        },
+            {
+                type:"number",
+                name:"idEnt",
+                message:"Please enter the number",
+                when:function (responce){
+                    if(responce.idQues==true){
+                        return true;
+                    }
+                }
+            },
+        {
+            type:"input",
+            name:"officeNumber",
+            message:"please enter your team members office number.",
+            when:function(responce){
+                return responce.Role.indexOf('Manager')>-1
+            }
+        },
+        {
+            type:"input",
+            name:"Github",
+            message:"Please enter team members Github username",
+            when:function(responce){
+                return responce.Role.indexOf('Engineer')>-1
+            }
+        },
+        {
+            type:"input",
+            name:"School",
+            message:"Please enter the team mebers school",
+            when:function(responce){
+                return responce.Role.indexOf('Intern')>-1
+            }
+        }
+
     ])
 }
+
+const moreTeamMembers = () =>{return inquirer
+.prompt([
+
+])
+}
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -42,3 +108,52 @@ const promptUser = () =>{
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+function  memberEntree(){
+promptUser()
+.then((responce)=>{
+    console.log("team member prompt successful");
+    let x = 0;
+    if (responce.idQues == false){
+        x = teamMembersFlex[i];
+        if(x==undefined){
+            x=0;
+        }
+        responce.id = x;
+    }
+    else{
+        responce.id = responce.idEnt;
+    }
+    switch(responce.indexOf(Role)>1){
+        case (responce.Role.indexOf('Manager')):
+        teamMembersFlex.push( new Manager(responce.Name,responce.id,responce.Email,responce.officeNumber));
+        break;
+
+        case(responce.Role.indexOf('Engineer')):
+        teamMembersFlex.push(new Engineer(responce.Name,responce.id,responce.Email,responce.Github));
+        break;
+        case(responce.Role.indexOf('Intern')):
+        teamMembersFlex.push(new Intern(responce.Name,responce.id,responce.Email,responce.School));
+        break;
+        default:
+
+    }
+    inquirer.prompt([
+        {
+            type:"confirm",
+            name:"goAgain",
+            message:"Enter another team member?",
+            
+        }
+    ])
+    .then((ans)=>{
+        if(responce.goAgain == true){
+            memberEntree();
+        }
+    })
+    
+})
+.catch(err => {console.log("There was an ErRoR..with prompt",err);});
+}
+
+// start working with teamMemberFlex array to gen htmlfile

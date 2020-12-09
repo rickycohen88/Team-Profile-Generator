@@ -5,14 +5,17 @@ class Employee{
         this.id=id;
         this.email=email;
     }
-    getName(){
-        return this.name;
-    }
-    getId() {
-        return this.id;
-    }
-    getEmail(){
-        return this.email;
-    }
+}
+Employee.prototype.getName = function(){
+    return this.name;
+}
+Employee.prototype.getId = function(){
+    return this.id;
+}
+Employee.prototype.getEmail = function(){
+    return this.email;
+}
+Employee.prototype.getRole = function(){
+    return this.constructor.name;
 }
 module.exports = Employee;
