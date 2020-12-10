@@ -113,31 +113,39 @@ function  memberEntree(){
 promptUser()
 .then((responce)=>{
     console.log("team member prompt successful");
-    let x = 0;
+    let x;
     if (responce.idQues == false){
-        x = teamMembersFlex[i];
+        x = teamMembersFlex.length + 1;
         if(x==undefined){
             x=0;
         }
+        
+        console.log("id is = x");
         responce.id = x;
     }
     else{
         responce.id = responce.idEnt;
+        console.log("is = num entered");
     }
-    switch(responce.indexOf(Role)>1){
-        case (responce.Role.indexOf('Manager')):
+    m = responce.Role;
+    n = m.toString();
+    console.log(JSON.stringify(n));
+    switch(true){
+        case (responce.Role.indexOf('Manager')>-1):
         teamMembersFlex.push( new Manager(responce.Name,responce.id,responce.Email,responce.officeNumber));
+        console.log("manager pushed to arr");
         break;
 
-        case(responce.Role.indexOf('Engineer')):
+        case(responce.role.indexOf('Engineer')>-1):
         teamMembersFlex.push(new Engineer(responce.Name,responce.id,responce.Email,responce.Github));
         break;
-        case(responce.Role.indexOf('Intern')):
+        case ('Intern'):
         teamMembersFlex.push(new Intern(responce.Name,responce.id,responce.Email,responce.School));
         break;
         default:
-
+            console.log("no roles matched");
     }
+    console.log(JSON.stringify(teamMembersFlex));
     inquirer.prompt([
         {
             type:"confirm",
@@ -147,13 +155,15 @@ promptUser()
         }
     ])
     .then((ans)=>{
-        if(responce.goAgain == true){
+        if(ans.goAgain == true){
             memberEntree();
         }
     })
-    
+    .catch(err => {console.log("There was an ErRoR..with goAgain prompt",err);});
 })
-.catch(err => {console.log("There was an ErRoR..with prompt",err);});
+
+    .catch(err => {console.log("There was an ErRoR..with prompt",err);});
 }
 
+memberEntree();
 // start working with teamMemberFlex array to gen htmlfile
