@@ -36,7 +36,7 @@ you can execute this application by navigating to the file location in a console
 ### screenshots / Code example
 ![Image](Assets/Capture.PNG "app in use")<br>
 ![Image](Assets/Capture2.PNG "code snippet")<br>
-![Image](Assets/10-OOP-homework-demo-2.PNG "demo html")
+![Image](Assets/10-OOP-homework-demo-2.png "demo html")
 
 
 
