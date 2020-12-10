@@ -33,18 +33,16 @@ you can execute this application by navigating to the file location in a console
 
 [link](https://drive.google.com/file/d/1saeYyln8Aps54GtVENXMK6tF-FHgYmyM/view?usp=sharing)
 
-### screenshots
-![Image](Assets/Main.PNG "website title")
-![Image](Assets/two.PNG "Screenshot 1")
-![Image](Assets/three.PNG "Screenshot 2")
+### screenshots / Code example
+![Image](Assets/Capture.PNG "app in use")<br>
+![Image](Assets/Capture2.PNG "code snippet")<br>
+![Image](Assets/10-OOP-homework-demo-2.PNG "demo html")
+
 
 
 ### Credits
-* White Board app [Link](https://awwapp.com/)
-* Github [Link](https://github.com/)
-* Gify-api [Link](https://developers.giphy.com/)
-* Webster Merriam [Link](https://dictionaryapi.com/)
-* YouTube Api [Link](https://developers.google.com/youtube/v3)
+* Node.js [Link](https://nodejs.org/en/)
+* NPM- inquirer [Link](https://www.npmjs.com/package/inquirer)
 
 
 ### Contributing

@@ -28,7 +28,7 @@ const promptUser = () =>{return inquirer
             message:"Please enter the team members email",
         },
         {
-            type: "checkbox",
+            type: "rawlist",
             name: "Role",
             message: "Please selct this team members role",
             choices:[
@@ -123,17 +123,11 @@ function  memberEntree(){
                 if(x==undefined){
                     x=0;
                 }
-                
-                console.log("id is = x");
                 responce.id = x;
             }
             else{
                 responce.id = responce.idEnt;
-                console.log("is = num entered");
             }
-            m = responce.Role;
-            n = m.toString();
-            console.log(JSON.stringify(n));
             switch(true){
                 case (responce.Role.indexOf('Manager')>-1):
                 teamMembersFlex.push( new Manager(responce.Name,responce.id,responce.Email,responce.officeNumber));
