@@ -75,15 +75,19 @@ const promptUser = () =>{return inquirer
             when:function(responce){
                 return responce.Role.indexOf('Intern')>-1
             }
+        },
+        {
+            type:"confirm",
+            name:"addAnother",
+            message:"would you like to add another team member"
         }
 
     ])
 }
-
-const moreTeamMembers = () =>{return inquirer
-.prompt([
-
-])
+function makeDirectory(dir){
+   if(!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+    }
 }
 
 // Write code to use inquirer to gather information about the development team members,
@@ -110,59 +114,57 @@ const moreTeamMembers = () =>{return inquirer
 // for the provided `render` function to work! ```
 
 function  memberEntree(){
-promptUser()
-.then((responce)=>{
-    console.log("team member prompt successful");
-    let x;
-    if (responce.idQues == false){
-        x = teamMembersFlex.length + 1;
-        if(x==undefined){
-            x=0;
-        }
-        
-        console.log("id is = x");
-        responce.id = x;
-    }
-    else{
-        responce.id = responce.idEnt;
-        console.log("is = num entered");
-    }
-    m = responce.Role;
-    n = m.toString();
-    console.log(JSON.stringify(n));
-    switch(true){
-        case (responce.Role.indexOf('Manager')>-1):
-        teamMembersFlex.push( new Manager(responce.Name,responce.id,responce.Email,responce.officeNumber));
-        console.log("manager pushed to arr");
-        break;
+    promptUser()
+    .then((responce)=>{
+            console.log("team member prompt successful");
+            let x;
+            if (responce.idQues == false){
+                x = teamMembersFlex.length + 1;
+                if(x==undefined){
+                    x=0;
+                }
+                
+                console.log("id is = x");
+                responce.id = x;
+            }
+            else{
+                responce.id = responce.idEnt;
+                console.log("is = num entered");
+            }
+            m = responce.Role;
+            n = m.toString();
+            console.log(JSON.stringify(n));
+            switch(true){
+                case (responce.Role.indexOf('Manager')>-1):
+                teamMembersFlex.push( new Manager(responce.Name,responce.id,responce.Email,responce.officeNumber));
+                console.log("manager pushed to arr");
+                break;
 
-        case(responce.role.indexOf('Engineer')>-1):
-        teamMembersFlex.push(new Engineer(responce.Name,responce.id,responce.Email,responce.Github));
-        break;
-        case ('Intern'):
-        teamMembersFlex.push(new Intern(responce.Name,responce.id,responce.Email,responce.School));
-        break;
-        default:
-            console.log("no roles matched");
-    }
-    console.log(JSON.stringify(teamMembersFlex));
-    inquirer.prompt([
-        {
-            type:"confirm",
-            name:"goAgain",
-            message:"Enter another team member?",
-            
-        }
-    ])
-    .then((ans)=>{
-        if(ans.goAgain == true){
-            memberEntree();
-        }
-    })
-    .catch(err => {console.log("There was an ErRoR..with goAgain prompt",err);});
-})
-
-    .catch(err => {console.log("There was an ErRoR..with prompt",err);});
+                case(responce.Role.indexOf('Engineer')>-1):
+                teamMembersFlex.push(new Engineer(responce.Name,responce.id,responce.Email,responce.Github));
+                break;
+                case (responce.Role.indexOf('Intern')>-1):
+                teamMembersFlex.push(new Intern(responce.Name,responce.id,responce.Email,responce.School));
+                break;
+                default:
+                    console.log("no roles matched");
+            }
+            console.log(teamMembersFlex);
+            if(responce.addAnother){
+                memberEntree();
+            }
+            else{
+                let brianaIsCallingMe = render(teamMembersFlex);
+                makeDirectory(OUTPUT_DIR);
+                fs.writeFile(outputPath,brianaIsCallingMe, (err) =>{
+                    if(err){
+                        throw err;
+                    }
+                })
+            }
+        })
+    
+    .catch(err => {console.log("There was an ErRoR..with promptUser",err);});
 }
 
 memberEntree();
